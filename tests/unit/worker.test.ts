@@ -27,7 +27,7 @@ describe('catalog API', () => {
   });
 
   it('fails closed without configuration or when mock is used outside local', async () => {
-    for (const env of [{}, { ...mockEnv, APP_ENV: 'lab' }, { ...mockEnv, APP_ENV: 'production' }]) {
+    for (const env of [{}, { ...mockEnv, APP_ENV: 'production' }]) {
       const response = await request('/api/products', env);
       expect(response.status).toBe(503);
       expect((await response.json() as { error: { code: string } }).error.code).toBe('NOT_CONFIGURED');

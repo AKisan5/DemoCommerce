@@ -1,3 +1,4 @@
+import { Orders } from './Orders'
 import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import type { Session, SupabaseClient } from '@supabase/supabase-js'
 import { Link, Navigate, Route, Routes, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -230,7 +231,13 @@ function Account() {
       if (signOutError) setError('ログアウトできませんでした。もう一度お試しください。')
     } catch { setError('ログアウトできませんでした。通信状況をご確認ください。') } finally { setBusy(false) }
   }
-  return <main className="section-wrap account-page"><p className="eyebrow">YOUR ACCOUNT</p><h1>マイページ</h1><p className="account-welcome">今日も、日々にいいものを。</p><section className="profile-card"><span className="profile-avatar"><Icon name="user" size={31} /></span><div><p className="eyebrow">TEST ACCOUNT</p><h2>{profile?.displayName || 'テストアカウント'}</h2><p>架空のデモアカウントでログインしています。</p></div><span className="signed-in"><Icon name="check" size={13} />ログイン中</span></section>{error && <div className="notice-box" role="alert"><p>{error}</p><button className="inline-link" type="button" onClick={() => { setError(''); setAttempt(attempt + 1) }}>プロフィールを再読み込み</button></div>}<div className="account-actions"><Link to="/#collection" className="button button-dark">商品をさがす<Icon name="arrow" size={18} /></Link><button type="button" className="button button-outline" onClick={() => void signOut()} disabled={busy}>{busy ? 'ログアウト中…' : 'ログアウト'}</button></div><p className="account-note">このデモでは商品閲覧とテストアカウントのログインをお試しいただけます。実際の購入・決済・配送は行いません。</p></main>
+  return <main className="section-wrap account-page"><p className="eyebrow">YOUR ACCOUNT</p><h1>マイページ</h1><p className="account-welcome">今日も、日々にいいものを。</p><section className="profile-card"><span className="profile-avatar"><Icon name="user" size={31} /></span><div><p className="eyebrow">TEST ACCOUNT</p><h2>{profile?.displayName || 'テストアカウント'}</h2><p>架空のデモアカウントでログインしています。</p></div><span className="signed-in"><Icon name="check" size={13} />ログイン中</span></section>{error && <div className="notice-box" role="alert"><p>{error}</p><button className="inline-link" type="button" onClick={() => { setError(''); setAttempt(attempt + 1) }}>プロフィールを再読み込み</button></div>}<div className="account-actions"><Link to="/orders" className="button button-outline">注文履歴・お客様情報</Link><Link to="/#collection" className="button button-dark">商品をさがす<Icon name="arrow" size={18} /></Link><button type="button" className="button button-outline" onClick={() => void signOut()} disabled={busy}>{busy ? 'ログアウト中…' : 'ログアウト'}</button></div><p className="account-note">このデモでは商品閲覧とテストアカウントのログインをお試しいただけます。実際の購入・決済・配送は行いません。</p></main>
+}
+
+function OrderPage() {
+  const { session, loading } = useContext(AuthContext)
+  const { pathname } = useLocation()
+  return <Orders key={pathname + (session?.user.id ?? '')} session={session} loading={loading} />
 }
 
 function NotFound({ product = false }: { product?: boolean }) {
@@ -238,5 +245,5 @@ function NotFound({ product = false }: { product?: boolean }) {
 }
 export default function App() {
   const { pathname } = useLocation()
-  return <AuthProvider><div id="top" /><a className="skip-link" href="#main-content">本文へスキップ</a><PageScroll /><Header key={pathname} /><div id="main-content" tabIndex={-1}><Routes><Route path="/" element={<Home />} /><Route path="/products/:slug" element={<ProductDetail key={pathname} />} /><Route path="/login" element={<Login />} /><Route path="/account" element={<Account />} /><Route path="*" element={<NotFound />} /></Routes></div><Footer /></AuthProvider>
+  return <AuthProvider><div id="top" /><a className="skip-link" href="#main-content">本文へスキップ</a><PageScroll /><Header key={pathname} /><div id="main-content" tabIndex={-1}><Routes><Route path="/" element={<Home />} /><Route path="/products/:slug" element={<ProductDetail key={pathname} />} /><Route path="/login" element={<Login />} /><Route path="/account" element={<Account />} /><Route path="/orders" element={<OrderPage />} /><Route path="/orders/:id" element={<OrderPage />} /><Route path="/lab/orders/:id" element={<OrderPage />} /><Route path="*" element={<NotFound />} /></Routes></div><Footer /></AuthProvider>
 }

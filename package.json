@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "dev:demo": "tsx scripts/configure-local.ts --demo && vite --host 127.0.0.1 --port 5188",
     "build": "tsx scripts/assert-lab-isolated.ts && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "lint": "eslint .",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
     "hono": "^4.13.13",
+    "jose": "^6.2.12",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4"
