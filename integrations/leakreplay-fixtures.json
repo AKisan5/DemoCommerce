@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "project": "democommerce-lab",
+  "environment": "lab",
+  "scope": {
+    "baseUrl": "SET_AT_RUNTIME_DO_NOT_COMMIT_REAL_URL",
+    "allowedMethods": ["GET"],
+    "allowedPathPatterns": [
+      "/orders/:id",
+      "/lab/orders/:id",
+      "/api/orders/:id",
+      "/api/lab/orders/:id"
+    ],
+    "authentication": "Supabase Auth A/B + Cloudflare Access, secrets held by Tool Gateway"
+  },
+  "fixtures": {
+    "users": ["buyer-a", "buyer-b"],
+    "orderIds": "Resolve at runtime using the provisioned test fixture registry; never hardcode credentials",
+    "markerA": "DEMO_ONLY_ORDER_A"
+  },
+  "cases": [
+    {
+      "id": "LAB-IDOR-001",
+      "type": "synthetic_idor",
+      "statusExpected": "confirmed",
+      "principal": "buyer-b",
+      "resourceOwner": "buyer-a",
+      "apiPath": "/api/lab/orders/{buyer_a_order_id}",
+      "uiPath": "/lab/orders/{buyer_a_order_id}",
+      "httpStatusExpected": 200,
+      "evidenceMarker": "DEMO_ONLY_ORDER_A",
+      "requiresRedactedScreenshot": true
+    },
+    {
+      "id": "CONTROL-IDOR-001",
+      "type": "negative_control",
+      "statusExpected": "not_confirmed",
+      "principal": "buyer-b",
+      "resourceOwner": "buyer-a",
+      "apiPath": "/api/orders/{buyer_a_order_id}",
+      "uiPath": "/orders/{buyer_a_order_id}",
+      "httpStatusExpected": 404
+    },
+    {
+      "id": "CONTROL-ANON-001",
+      "type": "unauthenticated_control",
+      "statusExpected": "not_confirmed",
+      "principal": "unauthenticated",
+      "resourceOwner": "buyer-a",
+      "apiPath": "/api/orders/{buyer_a_order_id}",
+      "httpStatusExpected": 401
+    }
+  ]
+}

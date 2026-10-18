@@ -1,0 +1,9 @@
+# For local Workers dev only. Copy to .dev.vars (gitignored).
+APP_ENV=local
+LAB_ENABLED=false
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
+ACCESS_TEAM_DOMAIN=
+ACCESS_AUD=
+ALLOWED_ORIGIN=http://localhost:5173
