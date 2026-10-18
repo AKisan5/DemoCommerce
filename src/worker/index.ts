@@ -112,7 +112,7 @@ app.all('/lab/*', (c) => (labConfigured(c.env) && /^\/lab\/orders\/[0-9a-f-]{36}
 
 app.all('*', async (c) => {
   const response = await c.env.ASSETS.fetch(c.req.raw);
-  const uiRoute = ['/', '/login', '/account', '/orders'].includes(c.req.path)
+  const uiRoute = ['/', '/login', '/account', '/orders', '/contact', '/staff'].includes(c.req.path)
     || /^\/orders\/[0-9a-f-]{36}$/.test(c.req.path)
     || /^\/products\/[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(c.req.path);
   if (!uiRoute && response.headers.get('Content-Type')?.includes('text/html')) {

@@ -17,6 +17,8 @@ test('storefront and member sign-in present ordinary shopping navigation', async
   await expect(page.getByLabel('パスワード', { exact: true })).toHaveAttribute('type', 'password');
   await expect(page.locator('body')).not.toContainText(/SQL|IDOR|XSS|VULNERABLE|未ログイン|HTTP|検証ケース/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect((await page.goto('/staff'))?.status()).toBe(200);
+  await expect(page.getByRole('heading', { name: 'スタッフログイン' })).toBeVisible();
 });
 
 test('sign-in, profile display, and sign-out keep technical metadata out of the page', async ({ page }) => {
@@ -51,7 +53,7 @@ test('failed sign-in shows a customer-facing error with no raw response', async 
 });
 
 test('contact confirmation displays the message as text without pretending to send it', async ({ page }) => {
-  await page.goto('/contact');
+  expect((await page.goto('/contact'))?.status()).toBe(200);
   await page.getByLabel('お問い合わせ内容', { exact: true }).fill('マグカップについて確認したいです。<b>メモ</b>');
   await page.getByRole('button', { name: '内容を確認する' }).click();
   await expect(page.locator('.member-message')).toHaveText('マグカップについて確認したいです。<b>メモ</b>');

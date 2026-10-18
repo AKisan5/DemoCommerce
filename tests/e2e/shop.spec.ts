@@ -88,7 +88,7 @@ test('real test-account login, verified profile, safe redirect and logout', asyn
   await expect(page.getByText('架空 花子', { exact: true })).toBeVisible();
   await expect.poll(() => page.locator('.license-image').evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await page.goto('/orders/2000000b-0000-4000-8000-000000000001');
-  await expect(page.getByRole('heading', { name: 'HTTP 404' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '注文が見つかりませんでした' })).toBeVisible();
   await page.goto('/account');
   await page.getByRole('button', { name: 'ログアウト', exact: true }).click();
   await expect(page).toHaveURL(/\/login(?:\?returnTo=%2Faccount)?$/);
