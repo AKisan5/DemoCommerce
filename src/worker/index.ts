@@ -4,6 +4,7 @@ import { PRODUCTS } from '../shared/products';
 import { dataMode, supabaseConfig, type Bindings } from './config';
 import { labConfigured, localDemoConfigured, publicDemoConfigured, verifyAccess } from './lab';
 import { orders } from './orders';
+import { attackLab, attackLabConfigured } from './attack-lab';
 
 const app = new Hono<{ Bindings: Bindings }>();
 const productFields = 'id,slug,name,description,price_jpy,category,image_path,is_active,stock';
@@ -13,11 +14,12 @@ app.use('*', async (c, next) => {
   await next();
   c.header('X-Content-Type-Options', 'nosniff');
   c.header('Referrer-Policy', 'strict-origin-when-cross-origin');
-  c.header('X-Frame-Options', 'DENY');
+  const xssLab = c.req.path === '/api/attack-lab/reflection';
+  c.header('X-Frame-Options', xssLab ? 'SAMEORIGIN' : 'DENY');
   c.header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   const supabaseOrigin = supabaseConfig(c.env)?.url ?? '';
   const dev = c.env.APP_ENV === 'local';
-  c.header('Content-Security-Policy', [
+  c.header('Content-Security-Policy', xssLab ? "sandbox allow-scripts; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'" : [
     "default-src 'self'",
     `script-src 'self'${dev ? " 'unsafe-inline' 'unsafe-eval'" : ''}`,
     "style-src 'self' 'unsafe-inline'",
@@ -48,9 +50,10 @@ app.get('/api/health', (c) => c.json({ ok: true, environment: c.env.APP_ENV ?? '
 app.get('/api/config', (c) => {
   const mode = dataMode(c.env);
   const config = mode === 'supabase' ? supabaseConfig(c.env) : null;
+  const lab = attackLabConfigured(c.env, new URL(c.req.url).hostname) ? { attackLabEnabled: true } : {};
   return c.json(config
-    ? { mode, supabaseUrl: config.url, supabasePublishableKey: config.publishableKey }
-    : { mode });
+    ? { mode, supabaseUrl: config.url, supabasePublishableKey: config.publishableKey, ...lab }
+    : { mode, ...lab });
 });
 
 app.get('/api/products', async (c) => {
@@ -100,9 +103,11 @@ app.get('/api/me', async (c) => {
 
 app.route('/api/orders', orders);
 app.route('/api/lab/orders', orders);
+app.route('/api/attack-lab', attackLab);
 app.all('/api/*', (c) => c.json(failure('NOT_FOUND', 'ページが見つかりません。'), 404));
 app.all('/lab', (c) => c.text('Not found', 404));
-app.all('/lab/*', (c) => labConfigured(c.env) && /^\/lab\/orders\/[0-9a-f-]{36}$/.test(c.req.path)
+app.all('/lab/*', (c) => (labConfigured(c.env) && /^\/lab\/orders\/[0-9a-f-]{36}$/.test(c.req.path))
+  || (c.req.path === '/lab/workbench' && attackLabConfigured(c.env, new URL(c.req.url).hostname))
   ? c.env.ASSETS.fetch(c.req.raw) : c.text('Not found', 404));
 
 app.all('*', async (c) => {

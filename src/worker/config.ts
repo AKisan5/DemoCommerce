@@ -13,6 +13,8 @@ export interface Bindings {
   ACCESS_AUD?: string;
   LOCAL_DEMO_ENABLED?: string;
   PUBLIC_DEMO_ENABLED?: string;
+  ATTACK_LAB_ENABLED?: string;
+  ATTACK_LAB_SESSION_SECRET?: string;
 }
 
 export function isPublishableKey(key: string): boolean {

@@ -1,4 +1,5 @@
 import { Orders } from './Orders'
+import { AttackLab } from './AttackLab'
 import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import type { Session, SupabaseClient } from '@supabase/supabase-js'
 import { Link, Navigate, Route, Routes, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -26,7 +27,7 @@ function Brand({ light = false }: { light?: boolean }) {
   return <Link to="/" className={`brand${light ? ' brand-light' : ''}`} aria-label="DemoCommerce ホーム"><span className="brand-symbol" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round"><path d="M24 5v38M5 24h38M10.5 10.5l27 27M10.5 37.5l27-27" /><circle cx="24" cy="24" r="4" fill="var(--paper)" strokeWidth="2.5" /></svg></span><span>DemoCommerce<span className="brand-caption">日々に、いいもの。</span></span></Link>
 }
 
-type AppConfig = { mode: 'mock' | 'supabase' | 'unconfigured'; supabaseUrl?: string; supabasePublishableKey?: string }
+type AppConfig = { mode: 'mock' | 'supabase' | 'unconfigured'; supabaseUrl?: string; supabasePublishableKey?: string; attackLabEnabled?: boolean }
 type AuthState = { client: SupabaseClient | null; session: Session | null; config: AppConfig | null; loading: boolean; error: boolean }
 const AuthContext = createContext<AuthState>({ client: null, session: null, config: null, loading: true, error: false })
 function AuthProvider({ children }: { children: ReactNode }) {
@@ -65,7 +66,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 }
 
 function Header() {
-  const { session } = useContext(AuthContext)
+  const { session, config } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
   const location = useLocation()
   function searchCatalog() {
@@ -75,6 +76,7 @@ function Header() {
     }
   }
   return <>
+    {config?.attackLabEnabled && <div className="announcement"><span>SECURITY LAB · 意図的な脆弱性 / 架空データのみ</span><Link to="/lab/workbench">検証ワークベンチを開く →</Link></div>}
     <div className="announcement"><span>いつもの毎日に、ちょうどいいものを。</span><span className="demo-tag">DEMO STORE<span>架空のストアです</span></span></div>
     <header className="site-header">
       <div className="header-inner"><Brand /><nav className="desktop-nav" aria-label="メインナビゲーション"><Link to="/#collection">商品をさがす</Link><Link to="/#about">私たちについて</Link></nav><div className="header-actions"><Link to="/#collection" className="icon-button" aria-label="商品を検索" onClick={searchCatalog}><Icon name="search" /></Link><Link to={session ? '/account' : '/login'} className="account-link" aria-label={session ? 'マイページ' : 'ログイン'}><Icon name="user" /><span>{session ? 'マイページ' : 'ログイン'}</span></Link><button className="icon-button menu-button" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}><Icon name={open ? 'close' : 'menu'} /></button></div></div>
@@ -179,7 +181,7 @@ function safeReturnTo(value: string | null) {
   try { const target = new URL(value, window.location.origin); return target.origin === window.location.origin && target.pathname !== '/login' ? `${target.pathname}${target.search}${target.hash}` : '/account' } catch { return '/account' }
 }
 function Login() {
-  const { client, session, loading, error: configError } = useContext(AuthContext)
+  const { client, session, loading, config, error: configError } = useContext(AuthContext)
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -187,6 +189,7 @@ function Login() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const returnTo = safeReturnTo(params.get('returnTo'))
+  if (config?.attackLabEnabled && params.get('auth') !== 'supabase') return <AttackLab />
   if (session) return <Navigate to={returnTo} replace />
   async function login(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -245,5 +248,5 @@ function NotFound({ product = false }: { product?: boolean }) {
 }
 export default function App() {
   const { pathname } = useLocation()
-  return <AuthProvider><div id="top" /><a className="skip-link" href="#main-content">本文へスキップ</a><PageScroll /><Header key={pathname} /><div id="main-content" tabIndex={-1}><Routes><Route path="/" element={<Home />} /><Route path="/products/:slug" element={<ProductDetail key={pathname} />} /><Route path="/login" element={<Login />} /><Route path="/account" element={<Account />} /><Route path="/orders" element={<OrderPage />} /><Route path="/orders/:id" element={<OrderPage />} /><Route path="/lab/orders/:id" element={<OrderPage />} /><Route path="*" element={<NotFound />} /></Routes></div><Footer /></AuthProvider>
+  return <AuthProvider><div id="top" /><a className="skip-link" href="#main-content">本文へスキップ</a><PageScroll /><Header key={pathname} /><div id="main-content" tabIndex={-1}><Routes><Route path="/" element={<Home />} /><Route path="/products/:slug" element={<ProductDetail key={pathname} />} /><Route path="/login" element={<Login />} /><Route path="/account" element={<Account />} /><Route path="/orders" element={<OrderPage />} /><Route path="/orders/:id" element={<OrderPage />} /><Route path="/lab/orders/:id" element={<OrderPage />} /><Route path="/lab/workbench" element={<AttackLab />} /><Route path="*" element={<NotFound />} /></Routes></div><Footer /></AuthProvider>
 }
