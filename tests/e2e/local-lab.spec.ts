@@ -12,7 +12,7 @@ test('local real B login reads A through lab only', async ({ page }) => {
   await expect(page).toHaveURL(/\/account$/);
   await page.goto('/orders/2000000a-0000-4000-8000-000000000001');
   await expect(page.getByRole('heading', { name: 'HTTP 404' })).toBeVisible();
-  await page.getByRole('link', { name: 'Aの注文：Lab API' }).click();
+  await page.goto('/lab/orders/2000000a-0000-4000-8000-000000000001');
   await expect(page.getByText('架空 花子', { exact: true })).toBeVisible();
   await expect(page.getByText('認可不備を再現：他の顧客の情報を取得しました', { exact: true })).toBeVisible();
   await expect.poll(() => page.locator('.license-image').evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);

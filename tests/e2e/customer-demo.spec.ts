@@ -17,16 +17,16 @@ test('synthetic identity, license image, blocked control and JSON evidence', asy
   });
   await page.route('**/api/orders/*', route => route.fulfill({ status: 404, json: { error: { code: 'NOT_FOUND' } } }));
   await page.goto(`/lab/orders/${fixture.orders[0].id}`);
-  await expect(page.getByText('認可不備を再現：他の顧客の情報を取得しました', { exact: true })).toBeVisible();
+  await expect(page.getByText('ご注文番号', { exact: true })).toBeVisible();
   await expect(page.getByText('架空 花子', { exact: true })).toBeVisible();
   await expect(page.getByText('1995-04-12', { exact: true })).toBeVisible();
   await expect.poll(() => page.locator('.license-image').evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  if (test.info().project.name === 'desktop') await page.screenshot({ path: 'docs/demo-preview.png', fullPage: true });
+
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: '取得した架空データをJSON保存' }).click();
+  await page.getByRole('button', { name: '注文情報をダウンロード' }).click();
   expect((await download).suggestedFilename()).toBe('SYNTHETIC-customer-evidence.json');
-  await page.getByRole('link', { name: 'Aの注文：通常API' }).click();
-  await expect(page.getByRole('heading', { name: 'HTTP 404' })).toBeVisible();
+  await page.goto(`/orders/${fixture.orders[0].id}`);
+  await expect(page.getByRole('heading', { name: '注文が見つかりませんでした' })).toBeVisible();
   await expect(page.getByText('架空 花子', { exact: true })).toHaveCount(0);
 });

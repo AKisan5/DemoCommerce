@@ -62,7 +62,7 @@ test('mock catalog never offers a fake login', async ({ page }) => {
   await expect(page).toHaveURL(/\/login/);
   await expect(page.getByLabel('メールアドレス', { exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: 'ログインする' })).toBeDisabled();
-  await expect(page.getByText('現在はカタログデモを公開中です')).toBeVisible();
+  await expect(page.getByText('ただいまログインをご利用いただけません')).toBeVisible();
 });
 
 test('Lab pages and endpoints remain inaccessible', async ({ request }) => {
