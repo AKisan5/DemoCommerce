@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" width="500" height="540"><defs>
+<filter id="shadow" x="-60%" y="-60%" width="220%" height="240%"><feDropShadow dx="8" dy="20" stdDeviation="14" flood-color="#444431" flood-opacity=".18"/></filter>
+<filter id="smallShadow" x="-50%" y="-50%" width="200%" height="220%"><feDropShadow dx="3" dy="7" stdDeviation="5" flood-color="#454330" flood-opacity=".17"/></filter>
+<filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+<linearGradient id="paper" x2="1" y2="1"><stop stop-color="#faf7ed"/><stop offset="1" stop-color="#e8e2d1"/></linearGradient>
+<linearGradient id="olive" x2="1" y2=".7"><stop stop-color="#6b775b"/><stop offset=".5" stop-color="#536246"/><stop offset="1" stop-color="#48593d"/></linearGradient>
+<linearGradient id="clay" x2="1" y2=".7"><stop stop-color="#d19879"/><stop offset=".5" stop-color="#b87759"/><stop offset="1" stop-color="#a15f43"/></linearGradient>
+<linearGradient id="ceramic" x2="1" y2=".3"><stop stop-color="#f8f5e9"/><stop offset=".45" stop-color="#eeeade"/><stop offset="1" stop-color="#d6d4c4"/></linearGradient>
+<linearGradient id="brass" x2="1" y2=".4"><stop stop-color="#9f8243"/><stop offset=".25" stop-color="#e0c890"/><stop offset=".55" stop-color="#cbb073"/><stop offset="1" stop-color="#9e8044"/></linearGradient>
+<linearGradient id="linen" x2="1" y2="1"><stop stop-color="#e5dfcb"/><stop offset=".5" stop-color="#d6cfb6"/><stop offset="1" stop-color="#b9b297"/></linearGradient>
+<linearGradient id="metal" x2="1" y2="1"><stop stop-color="#e2e2d9"/><stop offset=".5" stop-color="#c1c5bb"/><stop offset="1" stop-color="#939f91"/></linearGradient>
+<linearGradient id="wood" x2="1" y2="0"><stop stop-color="#bba88d"/><stop offset=".5" stop-color="#cfbda2"/><stop offset="1" stop-color="#ac977a"/></linearGradient>
+<pattern id="grain" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 1h5M1 0v5" stroke="#fff" stroke-opacity=".09" stroke-width=".5"/></pattern>
+<pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0v16" fill="none" stroke="#9f8d5c" stroke-opacity=".35" stroke-width=".7"/></pattern>
+<radialGradient id="background"><stop stop-color="#f2f0e7"/><stop offset="1" stop-color="#e6e6dc"/></radialGradient>
+</defs><rect width="500" height="540" fill="#e9e6db"/><path d="M0 440 500 290v250H0Z" fill="#fff" fill-opacity=".09"/><ellipse cx="273" cy="415" rx="128" ry="15" fill="#69735d" fill-opacity=".09" filter="url(#blur)"/><g transform="translate(128 185) scale(1.24) rotate(-3 100 105)" filter="url(#shadow)">
+<path d="M155 38c62-10 64 84 13 92" stroke="#e0dfd0" stroke-width="23" fill="none"/><path d="M158 39c50-7 53 75 13 84" stroke="#f0eee1" stroke-width="9" fill="none"/>
+<path d="M17 36c0 27 3 97 11 119 9 29 119 32 132 1 11-27 13-90 13-120Z" fill="url(#ceramic)"/>
+<ellipse cx="95" cy="36" rx="78" ry="27" fill="#faf7ec"/><ellipse cx="95" cy="37" rx="65" ry="20" fill="#c4beac"/><ellipse cx="95" cy="39" rx="61" ry="16" fill="#78604b"/>
+<path d="M42 38c19-9 43-12 67-9" stroke="#ab8c66" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path d="M29 62c0 27 2 57 7 77" stroke="#fffdf4" stroke-width="3" stroke-opacity=".5" fill="none"/>
+<path d="M51 161c24 9 70 10 95-3" stroke="#c3c4b3" stroke-width="2" fill="none"/>
+<text x="95" y="114" text-anchor="middle" font-family="Georgia,serif" font-size="8" letter-spacing="1.5" fill="#8e967f">good morning.</text>
+</g></svg>

@@ -1,0 +1,52 @@
+{
+  "name": "democommerce",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsx scripts/assert-lab-isolated.ts && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:start": "tsx scripts/start-supabase.ts",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset --local",
+    "db:test": "supabase test db --local",
+    "fixtures:provision": "tsx scripts/provision-test-users.ts",
+    "fixtures:reset": "tsx scripts/reset-test-fixtures.ts",
+    "db:configure": "tsx scripts/configure-local.ts",
+    "fixtures:verify": "tsx scripts/verify-fixtures.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "hono": "^4.13.13",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.64.0",
+    "@cloudflare/workers-types": "^5.20261018.1",
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "supabase": "^2.121.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.71.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.151.1"
+  }
+}

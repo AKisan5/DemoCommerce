@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 540" width="500" height="540"><defs>
+<filter id="shadow" x="-60%" y="-60%" width="220%" height="240%"><feDropShadow dx="8" dy="20" stdDeviation="14" flood-color="#444431" flood-opacity=".18"/></filter>
+<filter id="smallShadow" x="-50%" y="-50%" width="200%" height="220%"><feDropShadow dx="3" dy="7" stdDeviation="5" flood-color="#454330" flood-opacity=".17"/></filter>
+<filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+<linearGradient id="paper" x2="1" y2="1"><stop stop-color="#faf7ed"/><stop offset="1" stop-color="#e8e2d1"/></linearGradient>
+<linearGradient id="olive" x2="1" y2=".7"><stop stop-color="#6b775b"/><stop offset=".5" stop-color="#536246"/><stop offset="1" stop-color="#48593d"/></linearGradient>
+<linearGradient id="clay" x2="1" y2=".7"><stop stop-color="#d19879"/><stop offset=".5" stop-color="#b87759"/><stop offset="1" stop-color="#a15f43"/></linearGradient>
+<linearGradient id="ceramic" x2="1" y2=".3"><stop stop-color="#f8f5e9"/><stop offset=".45" stop-color="#eeeade"/><stop offset="1" stop-color="#d6d4c4"/></linearGradient>
+<linearGradient id="brass" x2="1" y2=".4"><stop stop-color="#9f8243"/><stop offset=".25" stop-color="#e0c890"/><stop offset=".55" stop-color="#cbb073"/><stop offset="1" stop-color="#9e8044"/></linearGradient>
+<linearGradient id="linen" x2="1" y2="1"><stop stop-color="#e5dfcb"/><stop offset=".5" stop-color="#d6cfb6"/><stop offset="1" stop-color="#b9b297"/></linearGradient>
+<linearGradient id="metal" x2="1" y2="1"><stop stop-color="#e2e2d9"/><stop offset=".5" stop-color="#c1c5bb"/><stop offset="1" stop-color="#939f91"/></linearGradient>
+<linearGradient id="wood" x2="1" y2="0"><stop stop-color="#bba88d"/><stop offset=".5" stop-color="#cfbda2"/><stop offset="1" stop-color="#ac977a"/></linearGradient>
+<pattern id="grain" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 1h5M1 0v5" stroke="#fff" stroke-opacity=".09" stroke-width=".5"/></pattern>
+<pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0v16" fill="none" stroke="#9f8d5c" stroke-opacity=".35" stroke-width=".7"/></pattern>
+<radialGradient id="background"><stop stop-color="#f2f0e7"/><stop offset="1" stop-color="#e6e6dc"/></radialGradient>
+</defs><rect width="500" height="540" fill="#e8e9e0"/><path d="M0 440 500 290v250H0Z" fill="#fff" fill-opacity=".09"/><ellipse cx="273" cy="415" rx="128" ry="15" fill="#69735d" fill-opacity=".09" filter="url(#blur)"/><g transform="translate(143 125) scale(1.05) rotate(-13 100 140)" filter="url(#shadow)">
+<path d="M16 18 193 10 204 271 25 283Z" fill="#d0cbb8"/><path d="M21 25 191 17 198 267 28 276Z" fill="#f0ebda"/>
+<path d="m14 10 178-6 8 263-178 8c-8 0-12-4-12-11L2 23c0-7 4-12 12-13Z" fill="url(#olive)"/>
+<path d="m19 10 8 260" stroke="#879274" stroke-width="1"/><path d="m174 7 8 263" stroke="#394e32" stroke-width="6"/>
+<path d="M13 11 190 5" stroke="#8d9a7e" stroke-opacity=".45"/>
+<g transform="translate(59 92) rotate(-2)"><rect width="82" height="65" rx="1" fill="#e2dcc6"/>
+<path d="M15 15h52M15 50h52" stroke="#a6a18b" stroke-width=".5"/><text x="41" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="11" letter-spacing="2" fill="#536247">NOTES</text>
+<text x="41" y="42" text-anchor="middle" font-family="sans-serif" font-size="4" letter-spacing="1.6" fill="#79806a">A LITTLE ROOM FOR IDEAS</text></g>
+<path d="m35 225 3 41" stroke="#627752" stroke-opacity=".4"/><path d="M23 274h175" stroke="#b9b39d" stroke-opacity=".5"/>
+</g></svg>

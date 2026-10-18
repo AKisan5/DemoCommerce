@@ -1,9 +1,11 @@
 # For local Workers dev only. Copy to .dev.vars (gitignored).
 APP_ENV=local
 LAB_ENABLED=false
+DATA_MODE=mock
+# For local Supabase, set DATA_MODE=supabase and copy the local URL/public key.
 SUPABASE_URL=
 SUPABASE_PUBLISHABLE_KEY=
-SUPABASE_SECRET_KEY=
+# No server secret is needed by the M0/M1 Worker. Provisioning uses .env.local.
 ACCESS_TEAM_DOMAIN=
 ACCESS_AUD=
 ALLOWED_ORIGIN=http://localhost:5173
